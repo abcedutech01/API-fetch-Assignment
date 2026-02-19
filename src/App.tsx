@@ -1,14 +1,12 @@
-import { useState } from 'react'
-import './App.css'
+import ArtworkTable from './ArtworkTable';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    
-    </>
-  )
+    <div style={{ padding: '20px' }}>
+      <h2 style={{fontFamily: 'Arial, sans-serif', textAlign: 'center', backgroundColor: '#f0f0f0'}}>Art Institute of Chicago</h2>
+      <ArtworkTable />
+    </div>
+  );
 }
 
-export default App
+export default App;
