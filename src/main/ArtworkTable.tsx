@@ -18,6 +18,8 @@ function ArtworkTable() {
     //variable for selecting rows
     const [selectedIds, setSelectedIds] = useState(new Set());
 
+    const [count, setCount] = useState(0);
+
     //rows count per page
     const rows = 10;
 
@@ -37,27 +39,33 @@ function ArtworkTable() {
 
         const j = await r.json();
 
+        //setting the json data into total records
         setData(j.data);
         setTotal(j.pagination.total);
 
+        //once data set setload is false
         setLoad(false);
-    } 
+    }
 
+    //this function is for changing the page
     function changePage(e: any) {
         setPage(e.page + 1);
     }
 
+    //this is for selecting rows on page
     const selectedOnPage = data.filter(d => {
         return selectedIds.has(d.id);
     });
 
-    function selectChange(e: any) {
+    //this function is for selecting and storing the selected rows that doesn't effect after page changes
+    function temp(e: any) {
         const temp = new Set(selectedIds);
 
         e.value.forEach((x: Artwork) => {
             temp.add(x.id);
         });
 
+        //this is for deselecting rows
         data.forEach(d => {
             const found = e.value.find((v: Artwork) => v.id === d.id);
             if (!found) {
@@ -66,9 +74,11 @@ function ArtworkTable() {
         });
 
         setSelectedIds(temp);
+        setCount(temp.size);
     }
 
-    return (
+    return (<>
+            <p style={{ margin: "10px 0px 10px 0px", color: "black",backgroundColor: "transparent", width: "10%", padding:"5px"}}>{count} items selected</p>
         <DataTable
             style={{ borderRadius: "20px", backgroundColor: "white" }}
             value={data}
@@ -80,7 +90,7 @@ function ArtworkTable() {
             first={(page - 1) * rows}
             onPage={changePage}
             selection={selectedOnPage}
-            onSelectionChange={selectChange}
+            onSelectionChange={temp}
             selectionMode="checkbox"
             dataKey="id"
             paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport"
@@ -93,6 +103,7 @@ function ArtworkTable() {
             <Column field="date_start" header="Start Date" />
             <Column field="date_end" header="End Date" />
         </DataTable>
+    </>
     );
 }
 
