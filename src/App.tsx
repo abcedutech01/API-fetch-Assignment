@@ -1,5 +1,5 @@
-import ArtworkTable  from './ArtworkTable';
-import './App.css';
+import React from 'react';
+import ArtworkTable from './main/ArtworkTable';
 
 function App() {
   return (

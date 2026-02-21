@@ -1,30 +1,39 @@
 import { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import type { Artwork } from './types';
+
+import type { Artwork } from '../types';
 
 function ArtworkTable() {
+
+    // main variables
 
     const [data, setData] = useState<Artwork[]>([]);
     const [load, setLoad] = useState(false);
 
+    //variable for set for page and total records
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
 
-    const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+    //variable for selecting rows
+    const [selectedIds, setSelectedIds] = useState(new Set());
 
+    //rows count per page
     const rows = 10;
 
     useEffect(() => {
         getData(page);
     }, [page]);
 
+    //fetching the api
     async function getData(p: number) {
         setLoad(true);
 
         const r = await fetch(
             'https://api.artic.edu/api/v1/artworks?page=' + p
         );
+
+        //converting into json file type to response
 
         const j = await r.json();
 
@@ -60,7 +69,8 @@ function ArtworkTable() {
     }
 
     return (
-        <DataTable style={{borderRadius: "20px", backgroundColor: "white"}}
+        <DataTable
+            style={{ borderRadius: "20px", backgroundColor: "white" }}
             value={data}
             paginator
             lazy
@@ -75,8 +85,8 @@ function ArtworkTable() {
             dataKey="id"
             paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport"
         >
-            <Column selectionMode="multiple" style={{ width: '3rem'}}/>
-            <Column field="title" header="Title"/>
+            <Column selectionMode="multiple" style={{ width: '3rem' }} />
+            <Column field="title" header="Title" />
             <Column field="place_of_origin" header="Origin" />
             <Column field="artist_display" header="Artist" />
             <Column field="inscriptions" header="Inscriptions" />
