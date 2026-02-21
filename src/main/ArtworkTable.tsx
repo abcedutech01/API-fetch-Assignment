@@ -1,13 +1,14 @@
+//importing neccesary files and components with prime react datatable and column   
 import { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-
 import type { Artwork } from '../types';
+
+//exportable function
 
 function ArtworkTable() {
 
     // main variables
-
     const [data, setData] = useState<Artwork[]>([]);
     const [load, setLoad] = useState(false);
 
@@ -18,11 +19,13 @@ function ArtworkTable() {
     //variable for selecting rows
     const [selectedIds, setSelectedIds] = useState(new Set());
 
+    //for counting the selected rows
     const [count, setCount] = useState(0);
 
-    //rows count per page
+    //rows show per page
     const rows = 10;
 
+    //fetch data pagewise
     useEffect(() => {
         getData(page);
     }, [page]);
@@ -60,7 +63,6 @@ function ArtworkTable() {
     //this function is for selecting and storing the selected rows that doesn't effect after page changes
     function temp(e: any) {
         const temp = new Set(selectedIds);
-
         e.value.forEach((x: Artwork) => {
             temp.add(x.id);
         });
@@ -73,11 +75,16 @@ function ArtworkTable() {
             }
         });
 
+        //using varible gor counting seleceted rows
+
         setSelectedIds(temp);
         setCount(temp.size);
     }
 
-    return (<>
+    return (
+    
+        //returning all the fetched databse
+    <>
             <p style={{ margin: "10px 0px 10px 0px", color: "black",backgroundColor: "transparent", width: "10%", padding:"5px"}}>{count} items selected</p>
         <DataTable
             style={{ borderRadius: "20px", backgroundColor: "white" }}
@@ -106,5 +113,5 @@ function ArtworkTable() {
     </>
     );
 }
-
+    // exporting the main component
 export default ArtworkTable;
