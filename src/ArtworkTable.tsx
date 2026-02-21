@@ -32,7 +32,7 @@ function ArtworkTable() {
         setTotal(j.pagination.total);
 
         setLoad(false);
-    }
+    } 
 
     function changePage(e: any) {
         setPage(e.page + 1);
@@ -75,7 +75,7 @@ function ArtworkTable() {
             dataKey="id"
             paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport"
         >
-            <Column selectionMode="multiple" style={{ width: '3rem', backgroundColor:"black"}} />
+            <Column selectionMode="multiple" style={{ width: '3rem'}}/>
             <Column field="title" header="Title"/>
             <Column field="place_of_origin" header="Origin" />
             <Column field="artist_display" header="Artist" />
